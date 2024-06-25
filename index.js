@@ -1,13 +1,20 @@
-const API_KEY = "3a001d4fcd044b3a8adeecdc6a89cb89";
-const url = "https://newsapi.org/v2/everything?q="
+const url = "https://newsserver-rqmv.onrender.com/news?q=";
 
+// Fetch news on window load
 window.addEventListener("load", () => fetchNews("India"));
 
-async function fetchNews (query) {
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-    const data = await res.json();
-    console.log(data)
-    bindData(data.articles)
+async function fetchNews(query) {
+    try {
+        const res = await fetch(`${url}${query}`);
+        const data = await res.json();
+        if (data.status === "ok") {
+            bindData(data.articles);
+        } else {
+            console.error("Error fetching news: ", data.message);
+        }
+    } catch (error) {
+        console.error("Error fetching news: ", error);
+    }
 }
 
 function bindData(articles) {
@@ -17,14 +24,14 @@ function bindData(articles) {
     cardsContainer.innerHTML = '';
 
     articles.forEach((article) => {
-        if(!article.urlToImage) return;
+        if (!article.urlToImage) return;
         const cardClone = newsCardTemplate.content.cloneNode(true);
-        fillDateInCard(cardClone,article);
+        fillDataInCard(cardClone, article);
         cardsContainer.appendChild(cardClone);
     });
 }
 
-function fillDateInCard(cardClone,article) {
+function fillDataInCard(cardClone, article) {
     const newsImg = cardClone.querySelector('#news-img');
     const newsTitle = cardClone.querySelector('#news-title');
     const newsSource = cardClone.querySelector('#news-source');
@@ -34,8 +41,8 @@ function fillDateInCard(cardClone,article) {
     newsTitle.innerHTML = article.title;
     newsDesc.innerHTML = article.description;
 
-    const date = new Date(article.publishedAt).toLocaleString("en-US",{
-        timeZone : "Asia/Jakarta",
+    const date = new Date(article.publishedAt).toLocaleString("en-US", {
+        timeZone: "Asia/Jakarta",
     });
 
     newsSource.innerHTML = `${article.source.name} · ${date}`;
@@ -46,6 +53,7 @@ function fillDateInCard(cardClone,article) {
 }
 
 let curSelectedNav = null;
+
 function onNavItemClick(id) {
     fetchNews(id);
     const navItem = document.getElementById(id);
@@ -63,4 +71,10 @@ searchButton.addEventListener("click", () => {
     fetchNews(query);
     curSelectedNav?.classList.remove("active");
     curSelectedNav = null;
-})
+});
+
+searchText.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        searchButton.click();
+    }
+});
