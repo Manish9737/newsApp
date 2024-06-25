@@ -4,6 +4,11 @@ const url = "https://newsserver-rqmv.onrender.com/news?q=";
 window.addEventListener("load", () => fetchNews("India"));
 
 async function fetchNews(query) {
+    const loading = document.getElementById('loading');
+    const cardsContainer = document.getElementById('cards-container');
+    loading.style.display = 'flex';
+    cardsContainer.style.display = 'none';
+
     try {
         const res = await fetch(`${url}${query}`);
         const data = await res.json();
@@ -14,6 +19,9 @@ async function fetchNews(query) {
         }
     } catch (error) {
         console.error("Error fetching news: ", error);
+    } finally {
+        loading.style.display = 'none';
+        cardsContainer.style.display = 'flex';
     }
 }
 
