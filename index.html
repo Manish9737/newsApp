@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container">
             <a class="navbar-brand" href="https://literate-rotary-phone-9pg55qxwx4w3jxq-5500.app.github.dev">
                 News73
@@ -42,20 +42,20 @@
     </nav>
     <main>
         <div class="container py-5">
-            <div class="row justify-content-center ">
-                <div class="col-md-10 justify-content-center align-items-center d-flex ">
+            <div class="row justify-content-center">
+                <div class="col-md-10 justify-content-center align-items-center d-flex">
                     <div class="spinner-border" role="status" id="loading">
                         <span class="sr-only visually-hidden">Loading...</span>
                     </div>
                 </div>
             </div>
-            <div class="row" id="cards-container">
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="cards-container">
                 <!-- Cards will be dynamically injected here -->
             </div>
         </div>
     </main>
     <template id="template-news-card">
-        <div class="col-md-4 mb-3 mt-3">
+        <div class="col mb-3 mt-3">
             <div class="card mb-4 h-100 p-3">
                 <div class="card-header p-0">
                     <img src="https://via.placeholder.com/400x200" alt="news-img" id="news-img" class="card-img-top">
@@ -64,8 +64,7 @@
                     <h5 id="news-title" class="card-title">This is the Title</h5>
                     <p class="news-source" id="news-source">End Gadget · 26/08/2023</p>
                     <p class="news-desc" id="news-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
-                        adipisci sint earum quia. Omnis, esse vero! Est voluptatem architecto sed quos vel, ipsam,
-                        facere
+                        adipisci sint earum quia. Omnis, esse vero! Est voluptatem architecto sed quos vel, ipsam, facere
                         saepe fugit veritatis esse error earum.</p>
                 </div>
             </div>
